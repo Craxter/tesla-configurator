@@ -1,0 +1,28 @@
+@if(options){
+<h1>Step 2: Select your config and options</h1>
+<div>
+  <label for="configSelect">Config</label>
+  <select id="configSelect" [(ngModel)]="selectedConfig">
+    <option [ngValue]="undefined">Choose...</option>
+    @for (config of options.configs; track config.id) {
+    <option [ngValue]="config">{{config.description}}</option>
+    }
+  </select>
+</div>
+@if(selectedConfig){
+<p>Range: {{selectedConfig.range}} miles - Max speed: {{selectedConfig.speed}} - Cost: {{selectedConfig.price |
+  currency}}</p>
+}
+@if(options.towHitch){
+<div>
+  <label for="includeTow">Tow hitch?</label>
+  <input type="checkbox" id="includeTow" [(ngModel)]="towHitch">
+</div>
+}
+@if(options.yoke){
+<div>
+  <label for="includeYoke">Yoke steering wheel?</label>
+  <input type="checkbox" id="includeYoke" [(ngModel)]="yokeSteering">
+</div>
+}
+}

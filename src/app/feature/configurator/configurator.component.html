@@ -1,0 +1,11 @@
+<div class="button-group">
+  <button id="step1" routerLink="" skipLocationChange>Step 1</button>
+  <button id="step2" [disabled]="!(carSettings$().model && carSettings$().color)" routerLink="/step2" skipLocationChange>Step 2</button>
+  <button id="step3" [disabled]="!carSettings$().config" routerLink="/step3" skipLocationChange>Step 3</button>
+</div>
+<router-outlet></router-outlet>
+
+@if(carSettings$().model && carSettings$().color){
+<img
+  [src]="'https://interstate21.com/tesla-app/images/' + carSettings$().model?.code + '/' + carSettings$().color?.code + '.jpg'">
+}
