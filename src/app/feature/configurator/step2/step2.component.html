@@ -17,14 +17,12 @@
 <div>
   <label for="includeTow">Tow hitch?</label>
   <input type="checkbox" id="includeTow" [checked]="towHitch" (change)="checkElem('hasTow',$event)">
-  {{towHitch}}
 </div>
 }
 @if(options.yoke){
 <div>
   <label for="includeYoke">Yoke steering wheel?</label>
   <input type="checkbox" id="includeYoke" [checked]="yokeSteering" (change)="checkElem('hasYoke',$event)">
-  {{yokeSteering}}
 </div>
 }
 }
