@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { CarConfig } from '../../../core/models/car-config';
@@ -13,7 +13,7 @@ import { ConfiguratorService } from '../../configurator.service';
   templateUrl: './step1.component.html',
   styleUrl: './step1.component.scss',
 })
-export class Step1Component {
+export class Step1Component implements OnInit{
   models$: Observable<Model[]> = this.cs.getModels();
   public selectedModel?: Model;
   public selectedColor?: Color;
