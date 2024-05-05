@@ -1,8 +1,13 @@
 import { Routes } from '@angular/router';
+import { ConfiguratorComponent } from './feature/configurator/configurator.component';
 
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./feature/configurator/configurator.routes').then(m => m.routes)
-  }
+    component: ConfiguratorComponent,
+    loadChildren: () =>
+      import('./feature/configurator/configurator.routes').then(
+        (m) => m.routes
+      ),
+  },
 ];
