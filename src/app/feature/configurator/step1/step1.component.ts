@@ -2,6 +2,7 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { CarConfig } from '../../../core/models/car-config';
 import { Color, Model } from '../../../core/models/model';
 import { ConfiguratorService } from '../../configurator.service';
 
@@ -14,37 +15,36 @@ import { ConfiguratorService } from '../../configurator.service';
 })
 export class Step1Component {
   models$: Observable<Model[]> = this.cs.getModels();
-  private _model?: Model;
-  private _color?: Color;
-
-  get selectedModel(): Model | undefined {
-    return this._model;
-  }
-
-  set selectedModel(model: Model | undefined) {
-    this._model = model;
-    this.cs.carSettings.update((settings) => ({
-      ...settings,
-      model,
-      config: undefined,
-    }));
-    if (model) this.selectedColor = model.colors[0];
-  }
-
-  get selectedColor(): Color | undefined {
-    return this._color;
-  }
-
-  set selectedColor(color: Color | undefined) {
-    this._color = color;
-    this.cs.carSettings.update((settings) => ({ ...settings, color }));
-  }
+  public selectedModel?: Model;
+  public selectedColor?: Color;
 
   constructor(private cs: ConfiguratorService) {}
 
   ngOnInit(): void {
     const { model, color } = this.cs.carSettings();
-    this._model = model;
-    this._color = color;
+    this.selectedModel = model;
+    this.selectedColor = color;
+  }
+
+  sameModel(m1: Model, m2: Model): boolean {
+    return m1?.code === m2?.code;
+  }
+
+  updateModel(): void {
+    if (this.selectedModel?.code !== this.cs.carSettings().model?.code) {
+      this.selectedColor = this.selectedModel?.colors[0];
+      this.cs.carSettings.set(
+        new CarConfig(this.selectedModel, this.selectedColor)
+      );
+    }
+  }
+
+  updateColor(): void {
+    if (this.selectedColor?.code !== this.cs.carSettings().color?.code) {
+      this.cs.carSettings.update((settings) => ({
+        ...settings,
+        color: this.selectedColor,
+      }));
+    }
   }
 }
